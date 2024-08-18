@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">wifidirectchatapp</string>
+    <string name="live_animation_desc">Live animation indicating network activity</string>
+</resources>
