@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/backgroundColor">
+    android:background="#C1A9EB"
+    android:padding="16dp">
 
-    <!-- Chat TextView -->
-    <TextView
-        android:id="@+id/chat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/chat_background"
-        android:padding="16dp"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circular_shape"
+        android:src="@drawable/client"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- ScrollView containing the chat TextView -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="348dp"
+        android:layout_height="515dp"
         app:layout_constraintBottom_toTopOf="@+id/messageContainer"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage">
+
+        <TextView
+            android:id="@+id/chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_background"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </ScrollView>
 
     <!-- Message Input Container -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,37 +43,32 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Type your message"
             android:background="@drawable/edittext_background"
+            android:hint="Type your message"
             android:padding="12dp"
             android:textColor="@color/textColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/send"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintVertical_bias="0.5"
-            app:layout_constraintHeight_default="wrap"
-            app:layout_constraintHeight_max="120dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="wrap" />
 
         <Button
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Send"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_background"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/message"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
