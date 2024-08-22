@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.io.File;
@@ -97,8 +100,9 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
                 }
 
                 InputStream inputStream = connection.getInputStream();
-                File outputDir = context.getCacheDir();
-                downloadedFile = new File(outputDir, Uri.parse(fileUrl).getLastPathSegment());
+                File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                String fileName = Uri.parse(fileUrl).getLastPathSegment();
+                downloadedFile = new File(downloadsDir, fileName);
 
                 FileOutputStream outputStream = new FileOutputStream(downloadedFile);
                 byte[] buffer = new byte[4096];
@@ -130,10 +134,18 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
         protected void onPostExecute(File file) {
             progressBar.setVisibility(View.GONE);
             if (file != null && file.exists()) {
+                // Notify the user that the file has been downloaded
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(file), "*/*");
+                Uri fileUri = Uri.fromFile(file);
+                intent.setDataAndType(fileUri, "*/*");
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                context.startActivity(intent);
+                context.startActivity(Intent.createChooser(intent, "Open file"));
+
+                // Optionally, notify the user that the file is saved in Downloads folder
+                Toast.makeText(context, "File downloaded to Downloads folder", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle the case where the download fails
+                Toast.makeText(context, "Download failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
